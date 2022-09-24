@@ -7,11 +7,11 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 #import chart_studio.plotly as py
-import cufflinks as cf
+#import cufflinks as cf
 import seaborn as sns
-import plotly.io as pio
+#import plotly.io as pio
 import plotly.express as px
-import plotly.offline as po
+#import plotly.offline as po
 import plotly.graph_objects as go
 #get_ipython().run_line_magic('matplotlib', 'inline')
 
