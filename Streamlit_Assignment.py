@@ -3,6 +3,7 @@
 
 # In[1]:
 
+from ssl import Options
 import streamlit as st
 import pandas as pd
 import numpy as np
@@ -26,12 +27,12 @@ header = st.container()
 dataset1 = st.container()
 text1 = st.container()
 dataset2 = st.container()
-dataset3 = st.container()
-dataset4 = st.container()
-dataset5 = st.container()
 text2 = st.container()
+dataset3 = st.container()
 text3 = st.container()
+dataset4 = st.container()
 text4 = st.container()
+dataset5 = st.container()
 text5 = st.container()
 
 # In[2]:
@@ -64,7 +65,7 @@ with dataset1:
     fig
 
 with text1:
-    st.text('We can observe that all stocks went through fluctuations between *Jan 2018* and *Dec 2019* with predictions to *Jan 2020*' 
+    st.text('We can observe that all stocks went through fluctuations between Jan 2018 and Dec 2019 with predictions to Jan 2020' 
             'which shows Microsoft having the highest stocks at 1.8')
 # In[4]:
 with dataset2:
@@ -77,14 +78,21 @@ with dataset2:
 
 
     # In[5]:
+    def interactive_plot(dataframe):
+        y_axis_value = st.selectbox('Select Y-axis', options = df_eu.columns)
+        fig = px.bar(df_eu, x = 'country', y = y_axis_value, text = y_axis_value, color = 'country')
+        fig.update_traces(texttemplate = '%{text:.2s}', textposition = 'outside')
+        fig.update_layout(uniformtext_minsize = 8)
+        fig.update_layout(xaxis_tickangle = -45)
+        st.plotly_chart(fig)
+    
+    interactive_plot(df_eu)
+
+    
 
 
-    fig = px.bar(df_eu, x = 'country', y = 'pop', text = 'pop', color = 'country')
-    fig.update_traces(texttemplate = '%{text:.2s}', textposition = 'outside')
-    fig.update_layout(uniformtext_minsize = 8)
-    fig.update_layout(xaxis_tickangle = -45)
-    fig
-
+with text2:
+    st.text('s')
 
 # In[6]:
 with dataset3:
@@ -97,12 +105,13 @@ with dataset3:
 
 
     # In[7]:
-
-
-    fig = px.scatter(df_iris, x = 'sepal_width', y = 'sepal_length', color = 'species', size = 'petal_length', 
+    def interactive_plot(dataframe):
+        x_axis_value = st.selectbox('Select X-axis', options = df_iris.columns)
+        y_axis_value = st.selectbox('Select Y-axis', options = df_iris.columns)
+        fig = px.scatter(df_iris, x = x_axis_value, y = y_axis_value, color = 'species', size = 'petal_length', 
             hover_data = ['petal_width'])
-    fig
-
+        st.plotly_chart(fig)
+    interactive_plot(df_iris)
 # In[8]:
 with dataset4:
     st.header('Restaurant Dataset')
@@ -115,7 +124,7 @@ with dataset4:
     # In[11]:
 
     #fig = px.box(df_tips, x = 'sex', y = 'tip')
-    
+    #st.multiselect('Select', df_tips.sex)
     fig = px.box(df_tips, x = 'day', y = 'tip', color = 'sex')
     fig
     #fig = px.box(df_tips, x = 'day', y = 'tip', color = 'sex')
@@ -130,7 +139,9 @@ with dataset5:
 
 
     # In[13]:
-
-
     fig = px.line_3d(flights, x = 'year', y = 'month', z = 'passengers', color = 'year')
     fig
+
+with text5:
+    st.text('We can see that there is an increase in passengers throughout the years, however the same patterns are repeated where the number of passengers peaks at July'
+            'before decreasing again meaning that July is the high season for flights')
